@@ -61,13 +61,83 @@ class ForYouPage extends StatelessWidget {
     return Scaffold(
       body: ListView(
         children: <Widget>[
-          HeroContent(),
+          HeroCard(),
+          ListTitle('Just Added'),
           HorizontalList(),
+          ListTitle('Mathemagic'),
           HorizontalList(),
+          ListTitle('Top Shows'),
           HorizontalList(),
+          ListTitle('Sports & Leisure'),
           HorizontalList(),
+          ListTitle('Categories'),
           HorizontalList(),
-          HorizontalList(),
+        ],
+      ),
+    );
+  }
+}
+
+class ListTitle extends StatelessWidget {
+  ListTitle(this.listTitle);
+  final String listTitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(listTitle),
+      trailing: Icon(
+        Icons.chevron_right,
+        color: Colors.red,
+      ),
+    );
+  }
+}
+
+class HeroCard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: const BorderRadius.all(
+          Radius.circular(8.0),
+        ),
+      ),
+      margin: EdgeInsets.symmetric(
+        horizontal: 20.0,
+        vertical: 8.0,
+      ),
+      elevation: 0,
+      color: Colors.transparent,
+      child: Column(
+        children: <Widget>[
+          Stack(
+            alignment: AlignmentDirectional.bottomStart,
+            children: <Widget>[
+              ClipRRect(
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(20),
+                  ),
+                  child: Image.asset('images/WIGU.jpg')),
+              Container(
+                width: 32.0,
+                height: 32.0,
+                decoration: BoxDecoration(
+                    color: Colors.orange,
+                    borderRadius:
+                        BorderRadius.only(topRight: Radius.circular(20.0))),
+                child: Icon(
+                  Icons.play_arrow,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+          ListTile(
+            contentPadding: EdgeInsets.only(left: 0.0, right: 20.0),
+            title: Text('The Enchanted Nightingale'),
+            subtitle: Text('Music by Julie Gable. Lyrics by Sidney Stein.'),
+          )
         ],
       ),
     );
@@ -77,87 +147,75 @@ class ForYouPage extends StatelessWidget {
 class HorizontalList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: 20.0,
-        top: 20.0,
-      ),
-      child: Container(
-        height: 230.0,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: <Widget>[
-            HorizontalListTile(Colors.lightBlue),
-            HorizontalListTile(Colors.green),
-            HorizontalListTile(Colors.yellow),
-            HorizontalListTile(Colors.teal),
-            HorizontalListTile(Colors.orange),
-            HorizontalListTile(Colors.pink),
-          ],
-        ),
+    return Container(
+      height: 230.0,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: <Widget>[
+          HorizontalListTile('WIGU'),
+          HorizontalListTile('WIGU'),
+          HorizontalListTile('WIGU'),
+          HorizontalListTile('WIGU'),
+          HorizontalListTile('WIGU'),
+          HorizontalListTile('WIGU'),
+          SizedBox(
+            width: 20.0,
+          ),
+        ],
       ),
     );
   }
 }
 
 class HorizontalListTile extends StatelessWidget {
-  HorizontalListTile(this.color);
+  HorizontalListTile(this.txID);
 
-  final Color color;
+  final String txID;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 20.0),
+      padding: const EdgeInsets.only(left: 20.0),
       child: Container(
         width: 224.0,
         child: Card(
+          color: Colors.transparent,
           elevation: 0,
           child: Wrap(
             children: <Widget>[
-              Image.asset('images/WIGU.jpg'),
+              Stack(
+                alignment: AlignmentDirectional.bottomStart,
+                children: <Widget>[
+                  ClipRRect(
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(20.0)),
+                    child: Image.asset('images/$txID.jpg'),
+                  ),
+                  Container(
+                    width: 32.0,
+                    height: 32.0,
+                    decoration: BoxDecoration(
+                        color: Colors.orange,
+                        borderRadius:
+                            BorderRadius.only(topRight: Radius.circular(20.0))),
+                    child: Icon(
+                      Icons.play_arrow,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
               ListTile(
+                contentPadding: EdgeInsets.only(
+                  left: 0.0,
+                  right: 20.0,
+                ),
                 title: Text('When I grow up'),
                 subtitle: Text('This is going to be fun!'),
               )
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class HeroContent extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.black38,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20.0),
-                topRight: Radius.circular(20.0),
-              ),
-            ),
-            height: 192.0,
-          ),
-          SizedBox(
-            height: 8.0,
-          ),
-          Text(
-            'Episode Title in one line',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
-          ),
-          Text(
-            'EPG for this episode in one very long line',
-            style: TextStyle(fontSize: 16.0, color: Colors.grey),
-          )
-        ],
       ),
     );
   }
